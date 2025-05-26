@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <title>Algoritmos de Discretizacion</title>
+</head>
+
+<body class="bg-[#1b1b1b] min-h-screen text-white font-mono px-10 py-8"
+    style="background: radial-gradient(circle, rgba(40,40,40,1) 0%, rgba(27,27,27,1) 50%, rgba(13,13,13,1) 100%)">
+
+    <div class="flex items-center mb-10">
+        <a href="{{ url_for('index') }}"
+            class="text-white border border-white px-4 py-2 rounded hover:bg-white hover:text-gray-900 transition text-sm">
+            ← Volver
+        </a>
+        <h1 class="text-3xl font-bold ml-6">Circunferencia (Punto Medio)</h1>
+    </div>
+
+    <form class="max-w-4xl flex space-x-6 items-end">
+        <div>
+            <label for="xc" class="block text-gray-300 mb-1">Centro X (Xc)</label>
+            <input type="number" id="xc" name="xc" class="w-20 bg-[#282828] text-white border border-gray-300 rounded px-4 py-2
+                    focus:outline-none focus:ring-2 focus:ring-white transition">
+        </div>
+        <div>
+            <label for="yc" class="block text-gray-300 mb-1">Centro Y (Yc)</label>
+            <input type="number" id="yc" name="yc" class="w-20 bg-[#282828] text-white border border-gray-300 rounded px-4 py-2
+                    focus:outline-none focus:ring-2 focus:ring-white transition">
+        </div>
+        <div>
+            <label for="r" class="block text-gray-300 mb-1">Radio (r)</label>
+            <input type="number" id="r" name="r" min="0" class="w-20 bg-[#282828] text-white border border-gray-300 rounded px-4 py-2
+                    focus:outline-none focus:ring-2 focus:ring-white transition">
+        </div>
+        <div class="flex space-x-4">
+            <button type="reset"
+                class="text-white border border-white px-6 py-2 rounded hover:bg-white hover:text-gray-900 transition">
+                Reiniciar
+            </button>
+
+            <button type="button"
+                class="text-white border border-white px-6 py-2 rounded hover:bg-white hover:text-gray-900 transition">
+                Crear gráfico
+            </button>
+        </div>
+    </form>
+</body>
+
+
+</html>

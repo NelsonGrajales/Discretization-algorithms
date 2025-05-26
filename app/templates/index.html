@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <title>Algoritmos de Discretizacion</title>
+</head>
+
+<body class="flex items-center justify-center h-screen bg-gray-900">
+    <div class="flex flex-col space-y-4 text-center">
+        <a href="{{ url_for('dda') }}"
+            class="text-[40px] font-mono font-bold text-white border border-white px-6 py-3 rounded hover:bg-white hover:text-gray-900 transition">
+            DDA
+        </a>
+        <a href="{{ url_for('breseham') }}"
+            class="text-[40px] font-mono font-bold text-white border border-white px-6 py-3 rounded hover:bg-white hover:text-gray-900 transition">
+            Breseham
+        </a>
+        <a href="{{ url_for('circunferencia') }}"
+            class="text-[40px] font-mono font-bold text-white border border-white px-6 py-3 rounded hover:bg-white hover:text-gray-900 transition">
+            Circunferencia
+        </a>
+        <a href="{{ url_for('elipse') }}"
+            class="text-[40px] font-mono font-bold text-white border border-white px-6 py-3 rounded hover:bg-white hover:text-gray-900 transition">
+            Elipse
+        </a>
+        <a href="{{ url_for('presentacion') }}"
+            class="text-[40px] font-mono font-bold text-white border border-white px-6 py-3 rounded hover:bg-white hover:text-gray-900 transition">
+            Presentación
+        </a>
+    </div>
+</body>
+
+</html>
