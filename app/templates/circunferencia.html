@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <title>Algoritmos de Discretizacion</title>
 </head>
 
@@ -20,7 +21,7 @@
         <h1 class="text-3xl font-bold ml-6">Circunferencia (Punto Medio)</h1>
     </div>
 
-    <form class="max-w-4xl flex space-x-6 items-end">
+    <form class="max-w-4xl flex space-x-6 items-end" method="POST" action="{{ url_for('circunferencia') }}">
         <div>
             <label for="xc" class="block text-gray-300 mb-1">Centro X (Xc)</label>
             <input type="number" id="xc" name="xc" class="w-20 bg-[#282828] text-white border border-gray-300 rounded px-4 py-2
@@ -42,12 +43,115 @@
                 Reiniciar
             </button>
 
-            <button type="button"
+            <button type="submit"
                 class="text-white border border-white px-6 py-2 rounded hover:bg-white hover:text-gray-900 transition">
                 Crear gráfico
             </button>
         </div>
     </form>
+    {% if puntos %}
+    <div class="mt-6 text-white font-mono flex flex-col space-y-6 w-full px-4">
+        <div class="flex space-x-6 w-full">
+            <div class="w-1/2 flex justify-center items-center bg-[#282828] p-4 rounded-lg">
+                <canvas id="cirChart" width="400" height="400"></canvas>
+            </div>
+
+            <div
+                class="w-1/2 flex flex-col justify-center items-center bg-[#282828] p-4 rounded-lg overflow-auto max-h-[1000px]">
+                <div class="mb-6 text-center">
+                    <h2 class="text-lg font-bold mb-2">Puntos ingresados:</h2>
+                    <p class="text-sm text-gray-300">
+                        (X1, Y1): <span class="text-white">{{ x1 }}, {{ y1 }}</span> &nbsp; — &nbsp;
+                        (X2, Y2): <span class="text-white">{{ x2 }}, {{ y2 }}</span>
+                    </p>
+                </div>
+
+                <div class="w-full">
+                    <h2 class="text-lg font-bold mb-4 text-center">Puntos generados:</h2>
+                    <div class="overflow-y-auto max-h-96 border border-gray-700 rounded-md shadow-inner">
+                        <table class="w-full table-auto border-collapse text-center text-sm">
+                            <thead class="sticky top-0 bg-[#1b1b1b] text-white border-b border-gray-600">
+                                <tr>
+                                    <th class="px-4 py-2 border-r border-gray-600">X</th>
+                                    <th class="px-4 py-2">Y</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for punto in puntos %}
+                                <tr
+                                    class="{% if loop.index is even %}bg-[#2a2a2a]{% else %}bg-[#1f1f1f]{% endif %} hover:bg-[#3a3a3a] transition">
+                                    {% for valor in punto %}
+                                    <td class="px-4 py-2 border-t border-gray-700">{{ valor }}</td>
+                                    {% endfor %}
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div
+            class="grid grid-cols-[repeat(21,minmax(0,1fr))] gap-[2px] bg-white w-fit mx-auto p-2 rounded-lg shadow-md">
+            {% for y in range(10, -11, -1) %}
+            <div class="contents">
+                {% for x in range(-10, 11) %}
+                {% set punto_activo = [x, y] in puntos %}
+                <div
+                    class="w-8 h-8 {% if punto_activo %}bg-white{% else %}bg-neutral-700{% endif %} border border-gray-500 rounded-md">
+                </div>
+                {% endfor %}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+
+    <script>
+        const datosJSONString = '{{ puntos | tojson | safe }}';
+        const datosJS = JSON.parse(datosJSONString);
+
+        // Convertir puntos a formato {x, y} para scatter
+        const scatterData = datosJS.map(point => ({ x: point[0], y: point[1] }));
+
+        const ctx = document.getElementById('cirChart').getContext('2d');
+
+        const myChart = new Chart(ctx, {
+            type: 'scatter',
+            data: {
+                datasets: [{
+                    label: 'Circunferencia',
+                    data: scatterData,
+                    backgroundColor: 'white',
+                    pointRadius: 8,
+                }]
+            },
+            options: {
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'X'
+                        },
+                        ticks: {
+                            stepSize: 1
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Y'
+                        },
+                        ticks: {
+                            stepSize: 1
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+    {% endif %}
+
 </body>
 
 
